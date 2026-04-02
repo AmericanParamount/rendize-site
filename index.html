@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RENDIZE — Web Design & Digital Marketing | Las Vegas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0a;
+      --bg-raised: #111111;
+      --bg-card: #161616;
+      --border: #222222;
+      --border-hover: #333333;
+      --text: #e8e8e8;
+      --text-dim: #777777;
+      --text-muted: #444444;
+      --accent: #c4ff00;
+      --accent-dim: rgba(196, 255, 0, 0.08);
+      --mono: 'Space Mono', monospace;
+      --sans: 'Outfit', -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    /* ---- NAV ---- */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.25rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+    }
+
+    .logo span { color: var(--text-dim); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-cta {
+      background: var(--accent) !important;
+      color: var(--bg) !important;
+      padding: 0.5rem 1.25rem;
+      font-weight: 600 !important;
+      font-size: 0.8rem !important;
+      letter-spacing: 0.08em;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ---- HERO ---- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 2.5rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(196, 255, 0, 0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      max-width: 900px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+
+    .hero h1 .accent { color: var(--accent); }
+
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-size: 1.15rem;
+      color: var(--text-dim);
+      max-width: 520px;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+
+    .hero-actions {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: var(--bg);
+      padding: 0.85rem 2rem;
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--text);
+      padding: 0.85rem 2rem;
+      font-family: var(--sans);
+      font-weight: 500;
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .btn-outline:hover { border-color: var(--accent); background: var(--accent-dim); }
+
+    .hero-stats {
+      margin-top: 5rem;
+      display: flex;
+      gap: 3.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.8s 1s forwards;
+    }
+
+    .stat-num {
+      font-family: var(--mono);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 0.25rem;
+    }
+
+    /* ---- SECTIONS ---- */
+    section { padding: 6rem 2.5rem; }
+
+    .section-tag {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      max-width: 560px;
+      font-weight: 300;
+    }
+
+    /* ---- SERVICES ---- */
+    #services { border-top: 1px solid var(--border); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1px;
+      margin-top: 3.5rem;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .service-card {
+      background: var(--bg);
+      padding: 2.5rem;
+      transition: background 0.4s;
+      position: relative;
+    }
+
+    .service-card:hover { background: var(--bg-raised); }
+
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 2.5rem;
+      right: 2.5rem;
+      height: 0;
+      background: var(--accent);
+      transition: height 0.3s;
+    }
+
+    .service-card:hover::after { height: 2px; }
+
+    .service-num {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* ---- WORK / PORTFOLIO ---- */
+    #work { border-top: 1px solid var(--border); }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .work-card {
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: border-color 0.4s, transform 0.3s;
+      cursor: pointer;
+    }
+
+    .work-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+    .work-thumb {
+      width: 100%;
+      aspect-ratio: 16/10;
+      background: var(--bg-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .work-thumb .thumb-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.06;
+    }
+
+    .work-thumb .thumb-pattern.grid-pattern {
+      background-image:
+        linear-gradient(var(--accent) 1px, transparent 1px),
+        linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+
+    .work-thumb .thumb-pattern.dot-pattern {
+      background-image: radial-gradient(var(--accent) 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+
+    .work-thumb .thumb-pattern.line-pattern {
+      background-image: repeating-linear-gradient(
+        -45deg,
+        var(--accent),
+        var(--accent) 1px,
+        transparent 1px,
+        transparent 12px
+      );
+    }
+
+    .work-info { padding: 1.5rem; }
+
+    .work-type {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .work-info h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .work-info p {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      font-weight: 300;
+    }
+
+    /* ---- PROCESS ---- */
+    #process { border-top: 1px solid var(--border); }
+
+    .process-steps {
+      margin-top: 3.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0;
+    }
+
+    .process-step {
+      padding: 2rem;
+      border: 1px solid var(--border);
+      margin-left: -1px;
+      margin-top: -1px;
+      position: relative;
+    }
+
+    .process-step::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.5s;
+    }
+
+    .process-step:hover::before { width: 100%; }
+
+    .step-num {
+      font-family: var(--mono);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .process-step h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .process-step p {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* ---- PRICING ---- */
+    #pricing { border-top: 1px solid var(--border); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .price-card {
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      transition: border-color 0.3s;
+    }
+
+    .price-card.featured {
+      border-color: var(--accent);
+      position: relative;
+    }
+
+    .price-card.featured::before {
+      content: 'POPULAR';
+      position: absolute;
+      top: -0.6rem;
+      left: 2rem;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      padding: 0.2rem 0.75rem;
+    }
+
+    .price-card:hover { border-color: var(--accent); }
+
+    .price-name {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .price-amount {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .price-amount span {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      font-weight: 300;
+    }
+
+    .price-desc {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+
+    .price-features {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .price-features li {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .price-features li::before {
+      content: '→';
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+    }
+
+    /* ---- CONTACT ---- */
+    #contact { border-top: 1px solid var(--border); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 3.5rem;
+    }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .form-group label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.85rem 1rem;
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--accent);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .form-group select option { background: var(--bg); }
+
+    .contact-info h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info p {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      font-weight: 300;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact-detail .label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      min-width: 80px;
+    }
+
+    .contact-detail .value {
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .contact-detail .value a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-left {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-right {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ---- ANIMATIONS ---- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s, transform 0.7s;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      .hero { padding: 7rem 1.25rem 3rem; }
+      section { padding: 4rem 1.25rem; }
+      .hero-stats { flex-wrap: wrap; gap: 2rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    /* ---- MOBILE NAV TOGGLE ---- */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .nav-toggle span {
+      width: 22px;
+      height: 2px;
+      background: var(--text-dim);
+      transition: background 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .nav-toggle { display: flex; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">RENDIZE<span>.co</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
+  </ul>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Web Design & Digital Marketing — Las Vegas, NV</div>
+  <h1>We build websites that <span class="accent">make you money.</span></h1>
+  <p class="hero-sub">Modern, fast, conversion-focused websites and marketing for local businesses. No templates. No BS. Just results.</p>
+  <div class="hero-actions">
+    <a href="#contact" class="btn-primary">Start a Project →</a>
+    <a href="#work" class="btn-outline">See Our Work</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">48hr</div>
+      <div class="stat-label">Average Turnaround</div>
+    </div>
+    <div>
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Custom Built</div>
+    </div>
+    <div>
+      <div class="stat-num">24/7</div>
+      <div class="stat-label">Support Included</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-tag">What We Do</div>
+  <h2 class="section-title">Everything your business needs online.</h2>
+  <p class="section-desc">From your first website to a full digital marketing engine — we handle it all so you can focus on running your business.</p>
+
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3>Website Design & Development</h3>
+      <p>Custom-built, mobile-first websites designed to convert visitors into customers. Fast load times, clean design, SEO-ready from day one.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3>Google Ads & Local SEO</h3>
+      <p>Get found when people search for your services. Google Business optimization, targeted ad campaigns, and local search strategy.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3>Social Media Management</h3>
+      <p>Consistent, professional content across Instagram, Facebook, and TikTok. We handle the posting so you don't have to.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <h3>Brand Identity & Content</h3>
+      <p>Logo design, brand guidelines, photography direction, and marketing materials that make your business look established and trustworthy.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <h3>Ongoing Maintenance</h3>
+      <p>Monthly updates, security, hosting, analytics reporting, and performance optimization. Your site stays fast and fresh.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <h3>AI-Powered Automation</h3>
+      <p>Chatbots, automated booking, email sequences, and smart tools that save you time and capture more leads around the clock.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="section-tag">Our Work</div>
+  <h2 class="section-title">Built for businesses like yours.</h2>
+  <p class="section-desc">Real projects for real local businesses. Every site is designed to drive revenue, not just look good.</p>
+
+  <div class="work-grid reveal">
+    <div class="work-card">
+      <div class="work-thumb">
+        <div class="thumb-pattern grid-pattern"></div>
+        PROJECT PREVIEW
+      </div>
+      <div class="work-info">
+        <div class="work-type">Restaurant</div>
+        <h3>Sakura Ramen House</h3>
+        <p>Full website + online ordering integration + Google Ads</p>
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="work-thumb">
+        <div class="thumb-pattern dot-pattern"></div>
+        PROJECT PREVIEW
+      </div>
+      <div class="work-info">
+        <div class="work-type">Auto Detailing</div>
+        <h3>Prestige Detail Co.</h3>
+        <p>Landing page + booking system + social media content</p>
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="work-thumb">
+        <div class="thumb-pattern line-pattern"></div>
+        PROJECT PREVIEW
+      </div>
+      <div class="work-info">
+        <div class="work-type">Fitness</div>
+        <h3>Iron Valley Gym</h3>
+        <p>Website + member portal + Instagram management</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-tag">How It Works</div>
+  <h2 class="section-title">Simple. Fast. No runaround.</h2>
+  <p class="section-desc">Most agencies take weeks and charge thousands. We move fast and keep it affordable.</p>
+
+  <div class="process-steps reveal">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <h3>Free Consultation</h3>
+      <p>Quick call or meeting. We learn about your business, goals, and what you need. No pressure, no contracts.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <h3>Custom Mockup</h3>
+      <p>We design a preview of your site within 48 hours. You see exactly what you're getting before you pay a dime.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <h3>Build & Launch</h3>
+      <p>Once approved, we build and launch your full site within days — not weeks. Domain, hosting, everything handled.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <h3>Grow & Support</h3>
+      <p>Ongoing maintenance, updates, and marketing support. Your site keeps working for you month after month.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-tag">Pricing</div>
+  <h2 class="section-title">Transparent pricing. No surprises.</h2>
+  <p class="section-desc">Every plan includes hosting, SSL, mobile optimization, and direct support.</p>
+
+  <div class="pricing-grid reveal">
+    <div class="price-card">
+      <div class="price-name">Starter</div>
+      <div class="price-amount">$497 <span>one-time</span></div>
+      <p class="price-desc">Perfect for businesses that just need a clean online presence.</p>
+      <ul class="price-features">
+        <li>Custom single-page website</li>
+        <li>Mobile responsive design</li>
+        <li>Contact form integration</li>
+        <li>Google Business setup</li>
+        <li>1 round of revisions</li>
+      </ul>
+      <a href="#contact" class="btn-outline" style="width:100%;justify-content:center;">Get Started</a>
+    </div>
+    <div class="price-card featured">
+      <div class="price-name">Growth</div>
+      <div class="price-amount">$997 <span>+ $149/mo</span></div>
+      <p class="price-desc">Full website + marketing. Everything you need to grow.</p>
+      <ul class="price-features">
+        <li>Multi-page custom website</li>
+        <li>SEO optimization</li>
+        <li>Google Ads setup & management</li>
+        <li>Social media content (8 posts/mo)</li>
+        <li>Monthly analytics report</li>
+        <li>Unlimited revisions</li>
+      </ul>
+      <a href="#contact" class="btn-primary" style="width:100%;justify-content:center;">Get Started →</a>
+    </div>
+    <div class="price-card">
+      <div class="price-name">Scale</div>
+      <div class="price-amount">Custom</div>
+      <p class="price-desc">For businesses ready to dominate their market online.</p>
+      <ul class="price-features">
+        <li>Everything in Growth</li>
+        <li>E-commerce / booking system</li>
+        <li>AI chatbot integration</li>
+        <li>Email marketing automation</li>
+        <li>Full brand identity package</li>
+        <li>Priority support</li>
+      </ul>
+      <a href="#contact" class="btn-outline" style="width:100%;justify-content:center;">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-tag">Get In Touch</div>
+  <h2 class="section-title">Let's build something.</h2>
+  <p class="section-desc">Tell us about your business. We'll get back to you within 24 hours with a free mockup or proposal.</p>
+
+  <div class="contact-grid reveal">
+    <div class="contact-form">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="John Smith">
+      </div>
+      <div class="form-group">
+        <label>Business Name</label>
+        <input type="text" placeholder="Smith's Auto Detail">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="john@example.com">
+      </div>
+      <div class="form-group">
+        <label>What do you need?</label>
+        <select>
+          <option>New Website</option>
+          <option>Website Redesign</option>
+          <option>Google Ads / SEO</option>
+          <option>Social Media Management</option>
+          <option>Full Package</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tell us more</label>
+        <textarea placeholder="Brief description of your business and what you're looking for..."></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%;justify-content:center;" onclick="alert('Form submitted! We\'ll be in touch within 24 hours.')">Send Message →</button>
+    </div>
+
+    <div class="contact-info">
+      <h3>Why work with us?</h3>
+      <p>We're a Las Vegas-based studio that specializes in helping local businesses compete online. No outsourcing, no templates — everything is custom-built for your brand. We're fast, affordable, and we actually pick up the phone.</p>
+      <div class="contact-detail">
+        <span class="label">Email</span>
+        <span class="value"><a href="mailto:hello@rendize.co">hello@rendize.co</a></span>
+      </div>
+      <div class="contact-detail">
+        <span class="label">Phone</span>
+        <span class="value"><a href="tel:+17025551234">(702) 555-1234</a></span>
+      </div>
+      <div class="contact-detail">
+        <span class="label">Location</span>
+        <span class="value">Las Vegas, NV</span>
+      </div>
+      <div class="contact-detail">
+        <span class="label">Hours</span>
+        <span class="value">Mon–Sat, 9am–7pm</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">RENDIZE © 2026</div>
+  <div class="footer-right">Built in Las Vegas, NV</div>
+</footer>
+
+<!-- SCROLL REVEAL -->
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObser
